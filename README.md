@@ -43,19 +43,79 @@ console.log(formatted); // Output: *Hello* _World_!
 
 ## Supported HTML Tags and WhatsApp Formatting
 
-| HTML Tags                                    | WhatsApp Format | Example Output    |
-| -------------------------------------------- | --------------- | ----------------- |
-| `<strong>`, `<b>`                            | `*text*`        | **bold text**     |
-| `<em>`, `<i>`, `<u>`                         | `_text_`        | _italic text_     |
-| `<s>`, `<strike>`, `<del>`                   | `~text~`        | ~~strikethrough~~ |
-| `<code>`, `<kbd>`, `<samp>`, `<var>`, `<tt>` | `` `text` ``    | `monospace`       |
-| `<pre>`                                      | ` ```text``` `  | `code block`      |
-| `<blockquote>`, `<q>`, `<cite>`              | `> text`        | > quoted text     |
-| `<ul><li>`                                   | `- item`        | • bulleted list   |
-| `<ol><li>`                                   | `1. item`       | 1. numbered list  |
-| `<h1>` to `<h6>`                             | `*text*`        | **heading**       |
-| `<br>`, `<hr>`                               | Line breaks     |                   |
-| `<mark>`                                     | `*text*`        | **highlighted**   |
+This package supports a comprehensive set of HTML tags and converts them to appropriate WhatsApp formatting:
+
+### Text Formatting
+
+| HTML Tags                  | WhatsApp Format | Example Output    | Description                                  |
+| -------------------------- | --------------- | ----------------- | -------------------------------------------- |
+| `<strong>`, `<b>`          | `*text*`        | **bold text**     | Bold formatting                              |
+| `<em>`, `<i>`, `<u>`       | `_text_`        | _italic text_     | Italic formatting (underline maps to italic) |
+| `<s>`, `<strike>`, `<del>` | `~text~`        | ~~strikethrough~~ | Strikethrough formatting                     |
+| `<ins>`                    | `_text_`        | _inserted text_   | Inserted text (maps to italic)               |
+| `<mark>`                   | `*text*`        | **highlighted**   | Highlighted text (maps to bold)              |
+
+### Code Formatting
+
+| HTML Tags                                    | WhatsApp Format | Example Output | Description           |
+| -------------------------------------------- | --------------- | -------------- | --------------------- |
+| `<code>`, `<kbd>`, `<samp>`, `<var>`, `<tt>` | `` `text` ``    | `monospace`    | Inline code/monospace |
+| `<pre>`                                      | ` ```text``` `  | `code block`   | Code blocks           |
+
+### Block Elements
+
+| HTML Tags                                | WhatsApp Format   | Example Output | Description                            |
+| ---------------------------------------- | ----------------- | -------------- | -------------------------------------- |
+| `<p>`, `<div>`, `<section>`, `<article>` | Text with spacing | Paragraph text | Block containers with paragraph breaks |
+| `<h1>` to `<h6>`                         | `*text*`          | **heading**    | All headings map to bold               |
+| `<address>`                              | Text with spacing | Address text   | Address blocks                         |
+
+### List Elements
+
+| HTML Tags              | WhatsApp Format         | Example Output        | Description      |
+| ---------------------- | ----------------------- | --------------------- | ---------------- |
+| `<ul><li>`             | `- item`                | • bulleted list       | Unordered lists  |
+| `<ol><li>`             | `1. item`               | 1. numbered list      | Ordered lists    |
+| `<dl>`, `<dt>`, `<dd>` | `*term*` `- definition` | **term** - definition | Definition lists |
+
+### Quote Elements
+
+| HTML Tags                       | WhatsApp Format | Example Output | Description      |
+| ------------------------------- | --------------- | -------------- | ---------------- |
+| `<blockquote>`, `<q>`, `<cite>` | `> text`        | > quoted text  | Quote formatting |
+
+### Line Breaks & Layout
+
+| HTML Tags | WhatsApp Format | Example Output | Description       |
+| --------- | --------------- | -------------- | ----------------- |
+| `<br>`    | `\n`            | Line break     | Single line break |
+| `<hr>`    | `\n---\n`       | ---            | Horizontal rule   |
+
+### Table Elements
+
+| HTML Tags                                  | WhatsApp Format     | Example Output | Description          |
+| ------------------------------------------ | ------------------- | -------------- | -------------------- |
+| `<table>`, `<thead>`, `<tbody>`, `<tfoot>` | Structured text     | Table content  | Basic table support  |
+| `<tr>`                                     | Row with line break | Row content    | Table rows           |
+| `<th>`                                     | `*text*` + tab      | **header**     | Table headers (bold) |
+| `<td>`                                     | Text + tab          | Cell content   | Table cells          |
+
+### Special Elements
+
+| HTML Tags                     | WhatsApp Format | Example Output   | Description                         |
+| ----------------------------- | --------------- | ---------------- | ----------------------------------- |
+| `<sup>`                       | `^text`         | text^superscript | Superscript                         |
+| `<sub>`                       | `_text`         | text_subscript   | Subscript                           |
+| `<abbr>`, `<small>`, `<time>` | `text`          | Plain text       | Preserves text content              |
+| `<a>`                         | `text`          | Link text        | Links (URL removed, text preserved) |
+
+### Ignored Elements
+
+These elements are completely removed from the output:
+
+- `<script>`, `<style>` - Scripts and styles
+- `<meta>`, `<link>`, `<head>`, `<title>` - Metadata elements
+- `<img>` - Images (WhatsApp doesn't support inline images in text)
 
 ## Usage Examples
 
@@ -165,9 +225,67 @@ WAMessageFormatter(code);
 // ```
 ````
 
-### Complex Examples
+### Table Formatting
 
 ```javascript
+// Simple table
+const table = `
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Role</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>John</td>
+      <td>30</td>
+      <td>Developer</td>
+    </tr>
+    <tr>
+      <td>Jane</td>
+      <td>25</td>
+      <td>Designer</td>
+    </tr>
+  </tbody>
+</table>
+`;
+WAMessageFormatter(table);
+// Output:
+// *Name*  *Age*  *Role*
+// John    30     Developer
+// Jane    25     Designer
+```
+
+### Special Text Elements
+
+```javascript
+// Superscript and subscript
+WAMessageFormatter("E = mc<sup>2</sup> and H<sub>2</sub>O");
+// Output: E = mc^2 and H_2O
+
+// Definition lists
+const definition = `
+<dl>
+  <dt>HTML</dt>
+  <dd>HyperText Markup Language</dd>
+  <dt>CSS</dt>
+  <dd>Cascading Style Sheets</dd>
+</dl>
+`;
+WAMessageFormatter(definition);
+// Output:
+// *HTML*
+// - HyperText Markup Language
+// *CSS*
+// - Cascading Style Sheets
+```
+
+### Complex Examples
+
+````javascript
 // Email-like content
 const email = `
 <div>
@@ -201,7 +319,46 @@ console.log(WAMessageFormatter(email));
 // > 1. Project updates
 // > 2. Budget review
 // > 3. Next steps
-```
+
+// Mixed content with all features
+const mixed = `
+<div>
+  <h2>Project Report</h2>
+  <p>Status: <mark>In Progress</mark></p>
+  <p>Formula: E = mc<sup>2</sup></p>
+  <p>Chemical: H<sub>2</sub>O</p>
+  <hr>
+  <blockquote>
+    <p>Progress has been <strong>excellent</strong> this week!</p>
+  </blockquote>
+  <pre>
+function calculate() {
+  return 42;
+}
+  </pre>
+</div>
+`;
+
+console.log(WAMessageFormatter(mixed));
+// Output:
+// *Project Report*
+//
+// Status: *In Progress*
+//
+// Formula: E = mc^2
+//
+// Chemical: H_2O
+//
+// ---
+//
+// > Progress has been *excellent* this week!
+//
+// ```
+// function calculate() {
+//   return 42;
+// }
+// ```
+````
 
 ## API Reference
 
@@ -220,6 +377,23 @@ Converts HTML string to WhatsApp formatted text.
 **Throws:**
 
 - Returns empty string for invalid input or parsing errors
+
+### Exports
+
+The module provides both default and named exports:
+
+```javascript
+// ES6 import (default export)
+import WAMessageFormatter from "wa-message-formatter";
+
+// ES6 import (named export)
+import { WAMessageFormatter } from "wa-message-formatter";
+
+// CommonJS require
+const WAMessageFormatter = require("wa-message-formatter").default;
+// or
+const { WAMessageFormatter } = require("wa-message-formatter");
+```
 
 ## TypeScript Support
 
@@ -258,10 +432,15 @@ This package is designed for both browser and Node.js environments.
 ### 0.0.1
 
 - Initial release
-- Full WhatsApp formatting support
-- TypeScript definitions
-- Comprehensive test suite
-- Performance optimizations
+- Full WhatsApp formatting support with comprehensive HTML tag coverage
+- TypeScript definitions with strict type safety
+- Support for nested formatting combinations
+- Table formatting support
+- Special elements (superscript, subscript, definitions)
+- Performance optimizations with regex caching
+- Comprehensive test suite with edge case handling
+- Graceful error handling for malformed HTML
+- Both ES6 and CommonJS export support
 
 ## License
 

@@ -1,0 +1,59 @@
+{
+  "name": "wa-message-formatter",
+  "version": "0.0.1",
+  "description": "wa-message-formatter is an npm package that converts WhatsApp message from HTML to plain text while preserving formatting such as Bold, Italic, Strikethrough, Monospace, Bulleted list, Numbered list, Quote and Inline code.",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "wa-message-formatter": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepublishOnly": "npm run build && npm test",
+    "release": "npm version patch && npm publish --access public --tag latest"
+  },
+  "dependencies": {
+    "htmlparser2": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.4",
+    "typescript": "^5.9.2"
+  },
+  "license": "MIT",
+  "homepage": "https://www.npmjs.com/package/wa-message-formatter",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:Harshalkatakiya/wa-message-formatter.git"
+  },
+  "publishConfig": {
+    "access": "restricted"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "author": {
+    "name": "Harshal Katakiya",
+    "email": "katakiyaharshl001@gmail.com",
+    "url": "https://github.com/Harshalkatakiya"
+  },
+  "keywords": [
+    "whatsapp",
+    "html",
+    "formatter",
+    "text",
+    "converter",
+    "markdown",
+    "messaging",
+    "html-to-text",
+    "whatsapp-formatter",
+    "text-formatting"
+  ]
+}

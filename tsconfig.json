@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "tsconfigRootDir": "./",
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "outDir": "dist",
+    "resolvePackageJsonExports": false,
+    "resolvePackageJsonImports": false,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "noEmitOnError": false,
+    "isolatedModules": true,
+    "sourceMap": false,
+    "esModuleInterop": true,
+    "types": [],
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "allowJs": false,
+    "verbatimModuleSyntax": false,
+    "typeRoots": [
+      "./src/types",
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "./dist",
+    "./build"
+  ]
+}

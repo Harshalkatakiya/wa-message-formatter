@@ -1,6 +1,6 @@
 {
   "name": "wa-message-formatter",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "wa-message-formatter is an npm package that converts WhatsApp message from HTML to plain text while preserving formatting such as Bold, Italic, Strikethrough, Monospace, Bulleted list, Numbered list, Quote and Inline code.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
